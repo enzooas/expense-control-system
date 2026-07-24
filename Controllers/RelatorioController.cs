@@ -23,23 +23,28 @@ public class RelatorioController : ControllerBase
     {
         var pessoas = await _context.Pessoas.ToListAsync();
 
-        var receitaTotal = _context.Transacoes
-            .Where(t => t.PessoaId == pessoa.Id)
-            .Where(t => t.Tipo == TipoTransacao.Receita)
-            .Sum(t => t.Valor);
-
-        var despesaTotal = _context.Transacoes
-            .Where(t => t.PessoaId == pessoa.Id)
-            .Where(t => t.Tipo == TipoTransacao.Despesa)
-            .Sum(t => t.Valor);
-
-        return new RelatorioPessoaDto
+        var relatorio = pessoas.Select(pessoa =>
         {
-            PessoaId = pessoa.Id,
-            NomePessoa = pessoa.Nome,
-            ReceitaTotal = receitaTotal,
-            DespesaTotal = despesaTotal,
-            Saldo = receitaTotal - despesaTotal
-        };
+            var receitaTotal = _context.Transacoes
+                .Where(t => t.PessoaId == pessoa.Id)
+                .Where(t => t.Tipo == TipoTransacao.Receita)
+                .Sum(t => t.Valor);
+
+            var despesaTotal = _context.Transacoes
+                .Where(t => t.PessoaId == pessoa.Id)
+                .Where(t => t.Tipo == TipoTransacao.Despesa)
+                .Sum(t => t.Valor);
+
+            return new RelatorioPessoaDto
+            {
+                PessoaId = pessoa.Id,
+                NomePessoa = pessoa.Nome,
+                ReceitaTotal = receitaTotal,
+                DespesaTotal = despesaTotal,
+                Saldo = receitaTotal - despesaTotal
+            };
+        }).ToList();
+
+        return Ok(relatorio);
     }
 }
