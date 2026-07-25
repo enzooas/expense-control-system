@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="README-assets\" />
     <Folder Include="Services\" />
   </ItemGroup>
 
