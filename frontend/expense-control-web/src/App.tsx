@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import api from "./services/api";
 import type { Pessoa } from "./types/Pessoa";
 import PessoaList from "./components/PessoaList";
+import PessoaForm from "./components/PessoaForm";
 
 function App() {
     const [pessoas, setPessoas] = useState<Pessoa[]>([]);
@@ -22,6 +23,8 @@ function App() {
     return (
     <>
         <h1>Controle de Gastos</h1>
+
+        <PessoaForm aoCadastrar={buscarPessoas} />
 
         <PessoaList pessoas={pessoas} />
     </>
