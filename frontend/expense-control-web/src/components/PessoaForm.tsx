@@ -34,7 +34,6 @@ function PessoaForm({ aoCadastrar }: PessoaFormProps) {
         <>
             <h2>Cadastrar Pessoa</h2>
             <form onSubmit={cadastrarPessoa}>
-
                 <input
                     type="text"
                     placeholder="Nome"

@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import api from "./services/api";
 import type { Pessoa } from "./types/Pessoa";
+import type { Transacao } from "./types/Transacao";
 import PessoaList from "./components/PessoaList";
 import PessoaForm from "./components/PessoaForm";
+import TransacaoForm from "./components/TransacaoForm";
 
 function App() {
     const [pessoas, setPessoas] = useState<Pessoa[]>([]);
+    const [transacoes, setTransacoes] = useState<Transacao[]>([]);
 
     async function buscarPessoas() {
         try {
@@ -16,18 +19,34 @@ function App() {
         }
     }
 
+    async function buscarTransacoes() {
+        try {
+            const resposta = await api.get("/Transacao");
+
+            setTransacoes(resposta.data);
+        } catch (erro) {
+            console.error(erro);
+        }
+    }
+
     useEffect(() => {
-       buscarPessoas();
+        buscarPessoas();
+        buscarTransacoes();
     }, []);
 
     return (
-    <>
-        <h1>Controle de Gastos</h1>
+        <>
+            <h1>Controle de Gastos</h1>
 
-        <PessoaForm aoCadastrar={buscarPessoas} />
+            <PessoaForm aoCadastrar={buscarPessoas} />
 
-        <PessoaList pessoas={pessoas} />
-    </>
+            <PessoaList pessoas={pessoas} />
+
+            <TransacaoForm
+                pessoas={pessoas}
+                aoCadastrar={buscarPessoas}
+            />
+        </>
     );
 }
 
