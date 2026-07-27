@@ -8,7 +8,7 @@ interface PessoaFormProps {
 function PessoaForm({ aoCadastrar }: PessoaFormProps) {
 
     const [nome, setNome] = useState("");
-    const [idade, setIdade] = useState(0);
+    const [idade, setIdade] = useState<number | "">("");
 
     async function cadastrarPessoa(
         e: React.FormEvent
@@ -16,6 +16,16 @@ function PessoaForm({ aoCadastrar }: PessoaFormProps) {
         e.preventDefault();
 
         try {
+            if (nome === "" && idade === "") {
+                alert("Informe o nome e a idade.");
+                return;
+            } else if (nome === "") {
+                alert("Informe o nome.");
+                return;
+            } else if (idade === "") {
+                alert("Informe a idade.");
+                return;
+            }
             await api.post("/Pessoa", {
                 nome,
                 idade
@@ -24,7 +34,7 @@ function PessoaForm({ aoCadastrar }: PessoaFormProps) {
             aoCadastrar();
 
             setNome("");
-            setIdade(0);
+            setIdade("");
         } catch (erro) {
             console.error(erro);
         }
@@ -32,7 +42,7 @@ function PessoaForm({ aoCadastrar }: PessoaFormProps) {
 
     return (
         <>
-            <h2>Cadastrar Pessoa</h2>
+            <h2>➕👤Cadastrar Pessoa</h2>
             <form onSubmit={cadastrarPessoa}>
                 <input
                     type="text"
@@ -44,7 +54,13 @@ function PessoaForm({ aoCadastrar }: PessoaFormProps) {
                     type="number"
                     placeholder="Idade"
                     value={idade}
-                    onChange={(e) => setIdade(Number(e.target.value))}
+                    onChange={(e) =>
+                        setIdade(
+                            e.target.value === ""
+                                ? ""
+                                : Number(e.target.value)
+                        )
+                    }
                 />
                 <button type="submit">
                     Cadastrar

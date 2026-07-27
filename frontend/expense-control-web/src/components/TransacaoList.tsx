@@ -10,19 +10,25 @@ interface TransacaoListProps {
 function TransacaoList({ transacoes, pessoas }: TransacaoListProps) {
     return (
         <>
-            <h2>Transações</h2>
+            <h2>💰Transações</h2>
 
             {transacoes.map((transacao) => {
                 const pessoa = pessoas.find(
                     p => p.id === transacao.pessoaId
                 );
-
                 return (
-                    <div key={transacao.id}>
-
+                    <div
+                        key={transacao.id} className="card"
+                    >
                         <h3>{transacao.descricao}</h3>
-
-                        <p>Valor: R$ {transacao.valor}</p>
+                        <p>
+                            Valor: {
+                                transacao.valor.toLocaleString("pt-BR", {
+                                    style: "currency",
+                                    currency: "BRL"
+                                })
+                            }
+                        </p>
                         <p>
                             Tipo: {
                                 transacao.tipo === TipoTransacao.Receita

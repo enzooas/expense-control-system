@@ -14,7 +14,7 @@ function TransacaoForm({
 
     const [descricao, setDescricao] = useState("");
 
-    const [valor, setValor] = useState(0);
+    const [valor, setValor] = useState<number | "">("");
 
     const [tipo, setTipo] = useState(0);
 
@@ -26,6 +26,16 @@ function TransacaoForm({
         e.preventDefault();
 
         try {
+            if (descricao === "" && valor === "") {
+                alert("Informe a descrição e o valor.");
+                return;
+            } else if (descricao === "") {
+                alert("Informe a descrição.");
+                return;
+            } else if (valor === "") {
+                alert("Informe o valor.");
+                return;
+            }
             await api.post("/Transacao", {
                 descricao,
                 valor,
@@ -36,17 +46,20 @@ function TransacaoForm({
             aoCadastrar();
 
             setDescricao("");
-            setValor(0);
+            setValor("");
             setTipo(0);
             setPessoaId(0);
-        } catch (erro) {
-            console.error(erro);
+        } catch (erro: any) {
+            alert(
+                erro.response?.data ||
+                "Erro ao cadastrar transação."
+            );
         }
     }
 
     return (
         <>
-            <h2>Cadastrar Transação</h2>
+            <h2>➕💰Cadastrar Transação</h2>
             <form onSubmit={cadastrarTransacao}>
                 <input
                     type="text"
@@ -58,7 +71,13 @@ function TransacaoForm({
                     type="number"
                     placeholder="Valor"
                     value={valor}
-                    onChange={(e) => setValor(Number(e.target.value))}
+                    onChange={(e) =>
+                        setValor(
+                            e.target.value === ""
+                                ? ""
+                                : Number(e.target.value)
+                        )
+                    }
                 />
                 <select
                     value={tipo}
