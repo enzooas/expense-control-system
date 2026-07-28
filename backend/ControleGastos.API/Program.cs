@@ -3,8 +3,6 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Configuration.Sources.Clear();
-
 builder.Services.AddControllers();
 
 builder.Services.AddCors(options =>
@@ -18,8 +16,16 @@ builder.Services.AddCors(options =>
     });
 });
 
+var connectionString = builder.Configuration
+    .GetConnectionString("DefaultConnection");
+
+Console.WriteLine("==============================");
+Console.WriteLine("BANCO UTILIZADO:");
+Console.WriteLine(connectionString);
+Console.WriteLine("==============================");
+
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlite(connectionString));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -31,9 +37,6 @@ app.UseSwaggerUI();
 
 app.UseCors("ReactPolicy");
 
-// HTTPS é gerenciado pelo Render
-// app.UseHttpsRedirection();
-
 app.UseAuthorization();
 
 app.MapControllers();
@@ -42,7 +45,28 @@ using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
+    Console.WriteLine("==============================");
+    Console.WriteLine("APLICANDO MIGRATIONS...");
+    Console.WriteLine("==============================");
+
     context.Database.Migrate();
+
+    Console.WriteLine("==============================");
+    Console.WriteLine("MIGRATIONS FINALIZADAS");
+    Console.WriteLine("==============================");
+
+
+    var tabelas = context.Database
+        .SqlQueryRaw<string>(
+            "SELECT name FROM sqlite_master WHERE type='table'")
+        .ToList();
+
+    Console.WriteLine("TABELAS EXISTENTES:");
+
+    foreach (var tabela in tabelas)
+    {
+        Console.WriteLine(tabela);
+    }
 }
 
 app.Run();
