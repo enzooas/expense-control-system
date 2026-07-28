@@ -9,13 +9,16 @@ import PessoaForm from "./components/PessoaForm";
 import TransacaoForm from "./components/TransacaoForm";
 import TransacaoList from "./components/TransacaoList";
 import Relatorio from "./components/Relatorio";
+import GraficoResumo from "./components/GraficoResumo";
 
 
 function App() {
+    // Estados principais da aplicação.
     const [pessoas, setPessoas] = useState<Pessoa[]>([]);
     const [transacoes, setTransacoes] = useState<Transacao[]>([]);
     const [relatorios, setRelatorios] = useState<RelatorioPessoa[]>([]);
 
+    // Busca todas as pessoas cadastradas.
     async function buscarPessoas() {
         try {
             const resposta = await api.get("/Pessoa");
@@ -25,6 +28,7 @@ function App() {
         }
     }
 
+    // Busca todas as transações.
     async function buscarTransacoes() {
         try {
             const resposta = await api.get("/Transacao");
@@ -35,6 +39,7 @@ function App() {
         }
     }
 
+    // Busca os dados do relatório.
     async function buscarRelatorio() {
         try {
             const resposta = await api.get("/Relatorio");
@@ -45,11 +50,13 @@ function App() {
         }
     }
 
+    // Atualiza apenas transações e relatório após cadastrar uma transação.
     async function atualizarDados() {
         await buscarTransacoes();
         await buscarRelatorio();
     }
 
+    // Atualiza todos os dados após cadastrar ou excluir pessoas.
     async function atualizarTudo() {
         await buscarPessoas();
         await buscarTransacoes();
@@ -94,6 +101,27 @@ function App() {
                     relatorios={relatorios}
                 />
             </section>
+            <section>
+                <GraficoResumo
+                    receita={
+                        relatorios.reduce(
+                            (total, r) => total + r.receitaTotal,
+                            0
+                        )
+                    }
+                    despesa={
+                        relatorios.reduce(
+                            (total, r) => total + r.despesaTotal,
+                            0
+                        )
+                    }
+                />
+            </section>
+            <footer>
+                Desenvolvido por Enzo Amaral
+                <br />
+                React • TypeScript • ASP.NET Core • SQLite
+            </footer>
         </div>
     );
 }

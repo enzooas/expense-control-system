@@ -8,13 +8,26 @@ interface PessoaListProps {
 
 function PessoaList({ pessoas, aoExcluir }: PessoaListProps) {
     async function excluirPessoa(id: number) {
-        try {
-            await api.delete(`/Pessoa/${id}`);
-            aoExcluir();
-        } catch (erro) {
-            console.error(erro);
+
+        const confirmar = window.confirm(
+            "Deseja realmente excluir esta pessoa?\nTodas as transações dela também serão removidas."
+        );
+        if (!confirmar) {
+            return;
         }
+        await api.delete(`/Pessoa/${id}`);
+        aoExcluir();
     }
+
+    if (pessoas.length === 0) {
+        return (
+            <>
+                <h2>👥 Pessoas</h2>
+                <p>Nenhuma pessoa cadastrada.</p>
+            </>
+        );
+    }
+    // Percorre todas as pessoas cadastradas.
     return (
         <>
             <h2>👤Pessoas</h2>

@@ -19,6 +19,15 @@ function Relatorio({ relatorios }: RelatorioProps) {
         (total, relatorio) => total + relatorio.saldo,
         0
     );
+    if (relatorios.length === 0) {
+        return (
+            <>
+                <h2>📊 Relatório</h2>
+                <p>Nenhum relatório disponível.</p>
+            </>
+        );
+    }
+// Exibe os totais financeiros de cada pessoa.
     return (
         <>
             <h2>📊Relatório</h2>
@@ -27,7 +36,8 @@ function Relatorio({ relatorios }: RelatorioProps) {
                     key={relatorio.pessoaId}
                     className="card"
                 >
-                    <h3>{relatorio.nomePessoa}</h3>
+                    <h3>
+                        {relatorio.nomePessoa}</h3>
                     <p style={{ color: "green" }}>
                         Receitas: {
                             relatorio.receitaTotal.toLocaleString("pt-BR", {

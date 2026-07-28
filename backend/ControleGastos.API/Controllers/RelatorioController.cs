@@ -18,6 +18,7 @@ public class RelatorioController : ControllerBase
         _context = context;
     }
 
+    // Calcula receitas, despesas e saldo de cada pessoa.
     [HttpGet]
     public async Task<ActionResult<List<RelatorioPessoaDto>>> GerarRelatorio()
     {

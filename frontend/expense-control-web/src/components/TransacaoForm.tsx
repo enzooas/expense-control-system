@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import api from "../services/api";
 import type { Pessoa } from "../types/Pessoa";
 
@@ -20,22 +20,28 @@ function TransacaoForm({
 
     const [pessoaId, setPessoaId] = useState(0);
 
+    // Define automaticamente a primeira pessoa quando a lista é carregada.
+    useEffect(() => {
+        if (pessoas.length > 0 && pessoaId === 0) {
+            setPessoaId(pessoas[0].id);
+        }
+    }, [pessoas, pessoaId]);
+
     async function cadastrarTransacao(
         e: React.FormEvent
     ) {
         e.preventDefault();
 
         try {
-            if (descricao === "" && valor === "") {
-                alert("Informe a descrição e o valor.");
-                return;
-            } else if (descricao === "") {
+            if (descricao === "") {
                 alert("Informe a descrição.");
                 return;
-            } else if (valor === "") {
+            }
+            if (valor === "") {
                 alert("Informe o valor.");
                 return;
             }
+            // Envia a nova transação para a API.
             await api.post("/Transacao", {
                 descricao,
                 valor,
@@ -57,6 +63,8 @@ function TransacaoForm({
         }
     }
 
+    console.log("Pessoas:", pessoas);
+    console.log("Pessoa selecionada:", pessoaId);
     return (
         <>
             <h2>➕💰Cadastrar Transação</h2>

@@ -30,17 +30,20 @@ public class TransacaoController : ControllerBase
     {
         var pessoa = await _context.Pessoas.FindAsync(transacao.PessoaId);
 
+        // Verifica se a pessoa existe.
         if (pessoa == null)
         {
             return BadRequest("Pessoa não encontrada.");
         }
 
+        // Menores de idade só podem cadastrar despesas.
         if (pessoa.Idade < 18 &&
             transacao.Tipo == TipoTransacao.Receita)
         {
             return BadRequest("Menores de idade só podem cadastrar despesas.");
         }
 
+        // Salva a transação no banco.
         _context.Transacoes.Add(transacao);
 
         await _context.SaveChangesAsync();

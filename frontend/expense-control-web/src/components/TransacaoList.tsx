@@ -8,10 +8,17 @@ interface TransacaoListProps {
 }
 
 function TransacaoList({ transacoes, pessoas }: TransacaoListProps) {
+    if (transacoes.length === 0) {
+        return (
+            <>
+                <h2>💰Transações</h2>
+                <p>Nenhuma transação cadastrada.</p>
+            </>
+        );
+    }
     return (
         <>
             <h2>💰Transações</h2>
-
             {transacoes.map((transacao) => {
                 const pessoa = pessoas.find(
                     p => p.id === transacao.pessoaId
@@ -37,6 +44,7 @@ function TransacaoList({ transacoes, pessoas }: TransacaoListProps) {
                             }
                         </p>
                         <p>
+                            
                             Pessoa: {pessoa?.nome}
                         </p>
                     </div>

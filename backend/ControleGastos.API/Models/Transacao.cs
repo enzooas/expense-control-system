@@ -9,5 +9,4 @@ public class Transacao
     public decimal Valor { get; set; }
     public TipoTransacao Tipo { get; set; }
     public int PessoaId { get; set; }
-  //  public Pessoa Pessoa { get; set; } = null!;
-}
+  }

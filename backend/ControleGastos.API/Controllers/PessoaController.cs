@@ -16,6 +16,7 @@ public class PessoaController : ControllerBase
         _context = context;
     }
 
+    // Lista todas as pessoas cadastradas.
     [HttpGet]
     public async Task<ActionResult<List<Pessoa>>> ListarPessoas()
     {
@@ -24,6 +25,7 @@ public class PessoaController : ControllerBase
         return Ok(pessoas);
     }
 
+    // Cria uma nova pessoa.
     [HttpPost]
     public async Task<ActionResult<Pessoa>> CriarPessoa(Pessoa pessoa)
     {
@@ -34,6 +36,7 @@ public class PessoaController : ControllerBase
         return Ok(pessoa);
     }
 
+    // Remove a pessoa e suas transações.
     [HttpDelete("{id}")]
     public async Task<ActionResult> DeletarPessoa(int id)
     {
