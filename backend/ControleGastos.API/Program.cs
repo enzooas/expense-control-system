@@ -1,18 +1,9 @@
 using ControleGastos.API.Data;
 using Microsoft.EntityFrameworkCore;
 
-var builder = WebApplication.CreateBuilder(new WebApplicationOptions
-{
-    Args = args,
-    EnvironmentName = Environments.Production
-});
+var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration.Sources.Clear();
-
-builder.Configuration
-    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
-    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: false)
-    .AddEnvironmentVariables();
 
 builder.Services.AddControllers();
 
@@ -56,7 +47,5 @@ using (var scope = app.Services.CreateScope())
 
     context.Database.Migrate();
 }
-
-app.Urls.Add("http://0.0.0.0:8080");
 
 app.Run();
