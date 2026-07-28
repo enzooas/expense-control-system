@@ -32,7 +32,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors("ReactPolicy");
 
-app.UseHttpsRedirection();
+// HTTPS é gerenciado pelo Render
+// app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
