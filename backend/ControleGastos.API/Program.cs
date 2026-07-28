@@ -46,4 +46,6 @@ using (var scope = app.Services.CreateScope())
     context.Database.Migrate();
 }
 
+app.Urls.Add("http://0.0.0.0:8080");
+
 app.Run();
