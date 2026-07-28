@@ -25,4 +25,4 @@ COPY --from=build /app/publish .
 
 EXPOSE 8080
 
-ENTRYPOINT ["dotnet", "ControleGastos.API.dll"]
+ENTRYPOINT ["dotnet", "ControleGastos.API.dll", "--urls", "http://0.0.0.0:8080"]
