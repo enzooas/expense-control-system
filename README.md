@@ -1,66 +1,87 @@
-# Expense Control System
+# 💰 Expense Control System
 
-A residential expense control system developed as a technical challenge.
+A full-stack residential expense control system developed as a technical challenge using **ASP.NET Core** and **React**.
 
-## Technologies
+## 🌐 Live Demo
 
-- ASP.NET Core
+🔗 https://expense-control-system.vercel.app/
+
+## 📌 Description
+
+Expense Control System allows users to register people, manage incomes and expenses, and automatically generate financial reports.
+
+The project was developed following REST API principles, using a persistent SQLite database and a React + TypeScript frontend.
+
+## 🚀 Technologies
+
+### Backend
+- ASP.NET Core (.NET 10)
 - C#
 - Entity Framework Core
 - SQLite
+- Swagger
+
+### Frontend
 - React
 - TypeScript
 - Axios
+- Vite
 
-## Features
+## ✨ Features
 
-### Person Management
+### 👤 Person Management
 
 - Create person
 - List people
 - Delete person
 - Automatic cascade deletion of related transactions
 
-### Transaction Management
+### 💸 Transaction Management
 
-- Create transaction
+- Create transactions
 - List transactions
+- Income and expense registration
+- Business rule validation
 
-Business rule:
+Business Rule:
 
-- Minors (under 18 years old) can only register expenses.
+- 👶 People under 18 years old can only register **expenses**.
 
-### Financial Report
+### 📊 Financial Reports
 
-Displays for each person:
+For each registered person:
 
 - Total income
 - Total expenses
-- Balance
+- Current balance
 
-Also displays:
+Overall summary:
 
-- Overall income
-- Overall expenses
+- Total income
+- Total expenses
 - Overall balance
 
-## Project Structure
+### 📈 Dashboard
 
-Backend
+- Financial summary cards
+- Overall balance visualization
+- Income vs Expense chart
 
-- Controllers
-- Models
-- DTOs
-- Data
-- Enums
+## 🏗️ Project Structure
 
-Frontend
+```
+expense-control-system
+│
+├── backend
+│   └── ControleGastos.API
+│
+├── frontend
+│   └── expense-control-web
+│
+└── README.md
+```
 
-- Components
-- Types
-- Services
-
-## Running the project
+## ▶️ Running the Project
 
 ### Backend
 
@@ -77,12 +98,42 @@ npm install
 npm run dev
 ```
 
-## Database
+## 💾 Database
 
 SQLite
 
-The database is automatically persisted between executions.
+The database persists data between executions.
 
-## Author
+## 📷 Screenshots
 
-Enzo Amaral
+> *(Add screenshots here after deployment)*
+
+- Dashboard
+- Transaction Management
+- Financial Report
+
+## 🎯 Objective
+
+This project was developed as a technical challenge to demonstrate knowledge of:
+
+- REST APIs
+- Full Stack Development
+- ASP.NET Core
+- React
+- TypeScript
+- Entity Framework Core
+- Database persistence
+- Software architecture
+- CRUD operations
+- Frontend and Backend integration
+- Deployment
+
+## 👨‍💻 Author
+
+**Enzo Amaral**
+
+GitHub:
+https://github.com/enzooas
+
+LinkedIn:
+*(Add your LinkedIn profile here)*
