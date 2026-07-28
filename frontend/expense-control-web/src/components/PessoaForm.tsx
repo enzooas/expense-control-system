@@ -6,7 +6,7 @@ interface PessoaFormProps {
 }
 
 function PessoaForm({ aoCadastrar }: PessoaFormProps) {
-// Estados do formulário.
+    // Estados do formulário.
     const [nome, setNome] = useState("");
     const [idade, setIdade] = useState<number | "">("");
 
@@ -16,15 +16,17 @@ function PessoaForm({ aoCadastrar }: PessoaFormProps) {
         e.preventDefault();
 
         try {
-            if (nome === "") {
+
+            if (nome.trim() === "") {
                 alert("Informe o nome.");
+                return;
             }
 
             if (idade === "") {
                 alert("Informe a idade.");
                 return;
             }
-            // Envia a nova pessoa para a API.
+
             await api.post("/Pessoa", {
                 nome,
                 idade
@@ -34,6 +36,7 @@ function PessoaForm({ aoCadastrar }: PessoaFormProps) {
 
             setNome("");
             setIdade("");
+
         } catch (erro) {
             console.error(erro);
         }

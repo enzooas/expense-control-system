@@ -33,7 +33,7 @@ function TransacaoForm({
         e.preventDefault();
 
         try {
-            if (descricao === "") {
+            if (descricao.trim() === "") {
                 alert("Informe a descrição.");
                 return;
             }
